@@ -94,6 +94,18 @@ find -type d -exec chmod +xr {} \;
   drush --root=${DOCROOT}/ cache-rebuild 2>/dev/null
 ) &
 
+# Change apache upload max filesize 2M to 50M
+sed -i 's/post_max_size = 8M/post_max_size = 50M/g' /etc/php/7.4/apache2/php.ini
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' /etc/php/7.4/apache2/php.ini
+service apache2 reload
+
+# Create backup script for dump sql files
+echo "#!/bin/bash
+cd /var/www/html
+mysqldump -v -u drupal --password=`cat /var/www/html/data/mysql/drupal-db-pw.txt` --databases drupal --result-file=/var/www/html/mysql-backup`date +%Y%m%d`.sql
+tar -czf mysql-backup.sql.tar.gz mysql-backup`date +%Y%m%d`.sql
+rm *.sql" > /var/lib/mysql/script.sh
+
 echo
 echo "---------------------- USERS CREDENTIALS ($(date +%T)) -------------------------------"
 echo
