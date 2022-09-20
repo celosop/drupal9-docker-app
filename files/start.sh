@@ -26,7 +26,7 @@ if [ ! -f ${DOCROOT}/index.php ]; then
   echo "**** No Drupal found. Downloading latest to ${DOCROOT}/ ****"
   cd ${BASEHTML}
   # Get the latest version number
-  DV=$(curl -s https://git.drupalcode.org/project/drupal/-/tags?format=atom | grep -e '<title>' | grep -Eo '[0-9\.]+' | sort -nr | grep ^${DRUPALVER} | head -n1)
+  DV=$(curl -s https://git.drupalcode.org/project/drupal/-/tags?format=atom | grep -e '<title>' | grep --invert-match -e "beta" -e "alpha" | grep -Eo '[0-9\.]+' | sort -nr | grep ^${DRUPALVER} | head -n1)
   git clone --depth 1 --single-branch -b ${DV} \
     https://git.drupalcode.org/project/drupal.git web
   # TODO: also require drupal/memcache
