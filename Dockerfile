@@ -25,7 +25,7 @@ RUN apt-get update; \
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd; \
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
   locale-gen en_US.UTF-8; \
-  mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor /var/www/html/web/sites/default /var/www/html/web/sites/default/files
+  mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile; \
