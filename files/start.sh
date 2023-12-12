@@ -71,7 +71,7 @@ if (! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php 2>/de
   cd ${DOCROOT}
   cp sites/default/default.settings.php sites/default/settings.php
   ${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
-    --db-url="mysql://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
+    --db-url="mysql://drupal:${DRUPAL_PASSWORD}@127.0.0.1:3306/drupal" \
     --site-name="Drupal9 docker App" | grep -v 'continue?' 2>/dev/null
   #${DRUSH} -y en memcache | grep -v 'continue?' | grep -v error 2>/dev/null
 else
